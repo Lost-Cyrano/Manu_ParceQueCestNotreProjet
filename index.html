@@ -2,66 +2,36 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecture vidéo en plein écran et redirection</title>
+    <title>Lecture Vidéo et Redirection</title>
     <style>
-        /* Mettre l'iframe en plein écran */
-        html, body {
-            height: 100%;
+        /* Optionnel : pour centrer la vidéo */
+        body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
             background-color: black;
         }
-
-        #youtube-video {
-            width: 100%;
-            height: 100%;
-        }
     </style>
-    <script>
-        // API YouTube prête
-        function onYouTubeIframeAPIReady() {
-            var player = new YT.Player('youtube-video', {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        // Lancer la vidéo en pleine écran
-        function onPlayerReady(event) {
-            var iframe = document.getElementById('youtube-video');
-            var requestFullScreen = iframe.requestFullscreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullscreen || iframe.msRequestFullscreen;
-
-            if (requestFullScreen) {
-                requestFullScreen.call(iframe);  // Demande de plein écran
-            }
-
-            event.target.playVideo();  // Lire la vidéo automatiquement
-        }
-
-        // Redirection après la fin de la vidéo
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                window.location.href = "https://lost-cyrano.github.io/VosProjets/";
-            }
-        }
-
-        // Charger l'API YouTube
-        function loadYouTubeAPI() {
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-
-        window.onload = loadYouTubeAPI;
-    </script>
 </head>
 <body>
-    <iframe id="youtube-video" src="https://www.youtube.com/embed/d7RWIcOcHgg?enablejsapi=1&autoplay=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+
+    <video id="video" autoplay>
+        <source src="PARCE QUE CEST NOTRE PROJET.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture vidéo.
+    </video>
+
+    <script>
+        const video = document.getElementById("video");
+
+        video.onended = function() {
+            // Redirection après la fin de la vidéo
+            window.location.href = "https://lost-cyrano.github.io/VosProjets/";
+        };
+    </script>
+
 </body>
 </html>
